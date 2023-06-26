@@ -22,11 +22,11 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-footer>
+    <q-footer v-if="$q.screen.lt.sm">
       <mobile-menu />
     </q-footer>
 
-    <q-drawer
+    <q-drawer v-else
       v-model="leftDrawerOpen"
       side="left"
       show-if-above

@@ -73,7 +73,7 @@
     </q-form>
   </q-page>
   <q-dialog v-model="exerciseCreationDialog" persistent>
-    <q-card style="min-width: 400px">
+    <q-card :style="$q.screen.lt.sm ? 'min-width: 300px' : 'min-width: 400px'">
       <q-card-section class="row items-center justify-end">
         <q-btn color="primary" icon="sym_r_close" round flat v-close-popup />
       </q-card-section>
