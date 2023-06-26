@@ -1,89 +1,181 @@
 <template>
   <q-page class="wrapper" padding>
     <q-form @submit="onSubmit">
-      <q-card flat>
+      <q-card flat bordered>
         <q-card-section>
           <div class="text-h6">Criar treino</div>
         </q-card-section>
-        <q-card-section>
-          <q-input
-            v-model="formWorkout.name"
-            type="text"
-            label="Nome"
-            outlined
-            :rules="[(val: any) => !!val || 'O nome é obrigatorio']"
-          />
-          <q-select
-            :rules="[(val: any) => !!val || 'O grupo muscular é obrigatorio']"
-            dropdown-icon="sym_r_expand_more"
-            v-model="formWorkout.muscle_groups"
-            :options="muscle_groups"
-            label="Grupo muscular"
-            option-label="name"
-            option-value="id"
-            multiple
-            outlined
-            clear-icon="sym_r_close"
-            clearable
-          >
-            <template v-slot:selected-item="scope">
-              <q-chip
-                removable
-                @remove="scope.removeAtIndex(scope.index)"
-                :tabindex="scope.tabindex"
-                color="primary"
-                text-color="white"
-                class="q-ma-none q-mr-xs q-pr-md"
-                icon-remove="sym_r_close"
-                square
-              >
-                {{ scope.opt.name }}
-              </q-chip>
-            </template>
-          </q-select>
-          <q-card flat bordered>
-            <q-card-section>
-              <div class="row items-center justify-between">
-                <div class="text-body1">Exercícios</div>
-                <q-btn
-                  color="primary"
-                  icon="sym_r_add"
-                  no-caps
-                  flat
-                  round
-                  unelevated
-                  @click="onAddExercise"
-                />
-              </div>
-            </q-card-section>
-            <template v-for="(exercise, index) in formWorkout.exercises" :key="index">
-              <q-item v-if="exercise">
-                <q-item-section>
-                  <q-item-label>{{ exercise?.exercise?.name }}</q-item-label>
-                  <q-item-label caption lines="2">{{ exercise?.repetitions?.max }}</q-item-label>
-                </q-item-section>
-                <q-item-section side>
-                  <div class="row q-gutter-sm">
+        <q-stepper
+          v-model="step"
+          ref="stepper"
+          color="primary"
+          animated
+          alternative-labels
+          :contracted="$q.screen.lt.sm"
+          flat
+          bordered
+          header-nav
+          done-color="green"
+          active-color="primary"
+          inactive-color="grey-5"
+        >
+          <q-step :name="1" title="Informaçoes" icon="settings" :done="step > 1" color="primary">
+            <q-form @submit="step++">
+              <q-card flat>
+                <q-card-section>
+                  <q-input
+                    v-model="formWorkout.name"
+                    type="text"
+                    label="Nome"
+                    outlined
+                    :rules="[(val: any) => !!val || 'O nome é obrigatorio']"
+                  />
+                  <q-input
+                    v-model="formWorkout.description"
+                    type="textarea"
+                    outlined
+                    label="Desccricao"
+                  />
+                </q-card-section>
+                <q-separator spaced />
+                <q-card-section class="q-pt-none q-gutter-y-sm">
+                  <q-btn
+                    color="primary"
+                    label="Avancar"
+                    unelevated
+                    class="full-width"
+                    no-caps
+                    type="submit"
+                  />
+                </q-card-section>
+              </q-card>
+            </q-form>
+          </q-step>
+          <q-step :name="2" title="Grupo muscular" icon="sym_r_taunt" :done="step > 2">
+            <q-form @submit="step++">
+              <q-card flat>
+                <q-card-section>
+                  <q-select
+                    :rules="[(val: any) => val.length > 0 || 'O grupo muscular é obrigatorio']"
+                    dropdown-icon="sym_r_expand_more"
+                    v-model="formWorkout.muscle_groups"
+                    :options="muscle_groups"
+                    label="Grupo muscular"
+                    option-label="name"
+                    option-value="id"
+                    multiple
+                    outlined
+                    clear-icon="sym_r_close"
+                    clearable
+                  >
+                    <template v-slot:selected-item="scope">
+                      <q-chip
+                        removable
+                        @remove="scope.removeAtIndex(scope.index)"
+                        :tabindex="scope.tabindex"
+                        color="primary"
+                        text-color="white"
+                        class="q-ma-none q-mr-xs q-pr-md"
+                        icon-remove="sym_r_close"
+                        square
+                      >
+                        {{ scope.opt.name }}
+                      </q-chip>
+                    </template>
+                  </q-select>
+                </q-card-section>
+                <q-separator spaced />
+                <q-card-section class="q-pt-none q-gutter-y-sm">
+                  <q-btn
+                    color="primary"
+                    label="Avancar"
+                    unelevated
+                    class="full-width"
+                    no-caps
+                    type="submit"
+                  />
+                  <q-btn
+                    color="primary"
+                    label="Voltar"
+                    outline
+                    class="full-width"
+                    no-caps
+                    @click="step--"
+                  />
+                </q-card-section>
+              </q-card>
+            </q-form>
+          </q-step>
+          <q-step :name="3" title="Exercicios" icon="sym_r_exercise" :done="step > 3">
+            <q-form @submit="onSubmit">
+              <q-card flat>
+                <q-card-section>
+                  <div class="row items-center justify-between">
+                    <div class="text-body1">Exercícios</div>
                     <q-btn
+                      color="primary"
+                      icon="sym_r_add"
+                      no-caps
                       flat
-                      color="dark"
-                      icon="sym_r_edit"
                       round
-                      @click="onEditExercise(index)"
-                    />
-                    <q-btn
-                      flat
-                      color="negative"
-                      icon="sym_r_delete"
-                      round
-                      @click="removeExercise(index)"
+                      unelevated
+                      @click="onAddExercise"
                     />
                   </div>
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-card>
-        </q-card-section>
+                </q-card-section>
+                <q-card-section>
+                  <template v-for="(exercise, index) in formWorkout.exercises" :key="index">
+                    <q-item v-if="exercise">
+                      <q-item-section>
+                        <q-item-label>{{ exercise?.exercise?.name }}</q-item-label>
+                        <q-item-label caption lines="2">{{
+                          exercise?.repetitions?.max
+                        }}</q-item-label>
+                      </q-item-section>
+                      <q-item-section side>
+                        <div class="row q-gutter-sm">
+                          <q-btn
+                            flat
+                            color="dark"
+                            icon="sym_r_edit"
+                            round
+                            @click="onEditExercise(index)"
+                          />
+                          <q-btn
+                            flat
+                            color="negative"
+                            icon="sym_r_delete"
+                            round
+                            @click="removeExercise(index)"
+                          />
+                        </div>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-card-section>
+                <q-separator spaced />
+                <q-card-section class="q-pt-none q-gutter-y-sm">
+                  <q-btn
+                    color="primary"
+                    label="Salvar"
+                    unelevated
+                    class="full-width"
+                    no-caps
+                    type="submit"
+                  />
+                  <q-btn
+                    color="primary"
+                    label="Voltar"
+                    outline
+                    class="full-width"
+                    no-caps
+                    @click="step--"
+                  />
+                </q-card-section>
+              </q-card>
+            </q-form>
+          </q-step>
+        </q-stepper>
       </q-card>
     </q-form>
   </q-page>
@@ -150,6 +242,7 @@ import muscleGroups from '@/data/muscle_groups'
 import exercisesFisical from '@/data/exercises'
 
 const exerciseCreationDialog = ref<boolean>(false)
+const step = ref<number>(1)
 const formModeExercise = ref<string>('create')
 const indexExerciseToEdit = ref<number | null>(null)
 const muscle_groups = computed(() => {
@@ -171,6 +264,7 @@ const exercisesFiltered = computed(() => {
 
 const formWorkout = reactive({
   name: '' as string,
+  description: '' as string,
   muscle_groups: [] as any[],
   exercises: [] as any[]
 })
