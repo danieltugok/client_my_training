@@ -77,23 +77,12 @@ const menus = ref<any[]>([
     icon: 'history',
     label: 'Históricos',
     route: '/history',
-    children: [
-      {
-        label: 'Treinos',
-        route: '/history/workouts',
-        children: []
-      },
-      {
-        label: 'Avaliações',
-        route: '/history/evaluations',
-        children: []
-      }
-    ]
+    children: []
   },
   {
-    icon: 'settings',
-    label: 'Configurações',
-    route: '/settings',
+    icon: 'receipt_long',
+    label: 'Avaliações',
+    route: '/evaluations',
     children: []
   },
   {
