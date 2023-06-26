@@ -131,69 +131,29 @@
 </template>
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
+import muscleGroups from '@/data/muscle_groups'
+import exercisesFisical from '@/data/exercises'
+
 const exerciseCreationDialog = ref<boolean>(false)
 const formModeExercise = ref<string>('create')
 const indexExerciseToEdit = ref<number | null>(null)
-const muscle_groups = [
-  {
-    id: 1,
-    name: 'Peito'
-  },
-  {
-    id: 2,
-    name: 'Costas'
-  },
-  {
-    id: 3,
-    name: 'Ombro'
-  },
-  {
-    id: 4,
-    name: 'Bíceps'
-  },
-  {
-    id: 5,
-    name: 'Tríceps'
-  },
-  {
-    id: 6,
-    name: 'Quadríceps'
-  },
-  {
-    id: 7,
-    name: 'Posterior de coxa'
-  },
-  {
-    id: 8,
-    name: 'Panturiilha'
-  },
-  {
-    id: 9,
-    name: 'Abdômen'
-  }
-]
-const exercises = [
-  {
-    id: 1,
-    name: 'Supino reto',
-    muscle_groups: [1]
-  },
-  {
-    id: 2,
-    name: 'Supino inclinado',
-    muscle_groups: [1]
-  },
-  {
-    id: 3,
-    name: 'Supino declinado',
-    muscle_groups: [1]
-  }
-]
-const exercisesFiltered = computed(() => {
-  return exercises.filter((exercise) => {
-    return !formWorkout.exercises.some((item) => item.exercise.id === exercise.id)
-  })
+const muscle_groups = computed(() => {
+  return muscleGroups
 })
+const exercises = computed<any[]>(() => {
+  return exercisesFisical
+})
+
+const exercisesFiltered = computed(() => {
+  return exercises.value
+    .filter((exercice: any) =>
+      formWorkout.muscle_groups.some((group: any) => group.name === exercice.muscle_groups)
+    )
+    .filter((exercise: any) => {
+      return !formWorkout.exercises.some((item) => item.exercise.id === exercise.id)
+    })
+})
+
 const formWorkout = reactive({
   name: '' as string,
   muscle_groups: [] as any[],
