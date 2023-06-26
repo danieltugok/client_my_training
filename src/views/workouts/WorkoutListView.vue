@@ -2,7 +2,7 @@
   <q-page class="wrapper" padding>
     <q-toolbar>
       <q-toolbar-title>Treinos</q-toolbar-title>
-      <q-btn flat dense icon="apps" label="Adicionar" no-caps to="/workouts/create" />
+      <q-btn flat dense icon="sym_r_add" label="Adicionar" no-caps to="/workouts/create" />
     </q-toolbar>
     <q-table :rows="data" :columns="columns" row-key="name" flat bordered :grid="gridMode">
       <template v-slot:item="props">

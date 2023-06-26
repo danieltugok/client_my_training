@@ -25,7 +25,22 @@
             outlined
             clear-icon="sym_r_close"
             clearable
-          />
+          >
+            <template v-slot:selected-item="scope">
+              <q-chip
+                removable
+                @remove="scope.removeAtIndex(scope.index)"
+                :tabindex="scope.tabindex"
+                color="primary"
+                text-color="white"
+                class="q-ma-none q-mr-xs q-pr-md"
+                icon-remove="sym_r_close"
+                square
+              >
+                {{ scope.opt.name }}
+              </q-chip>
+            </template>
+          </q-select>
           <q-card flat bordered>
             <q-card-section>
               <div class="row items-center justify-between">
