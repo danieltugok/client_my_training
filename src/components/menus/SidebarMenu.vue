@@ -6,9 +6,10 @@
           <q-expansion-item
             :icon="item.icon"
             :label="item.label"
+            dense
             group="main-menu"
-            class="overflow-hidden q-mx-md q-my-md q-py-none q-px-sm"
-            :header-class="'rounded-borders q-py-none '+ 
+            class="overflow-hidden q-px-sm"
+            :header-class="'rounded-borders q-py-sm q-mx-sm  q-px-sm q-my-xs '+ 
               (item.children.find((item: any) => item.route === currentRoute)
                 ? 'bg-primary text-white'
                 : '')"
@@ -19,6 +20,7 @@
                   <q-item
                     clickable
                     v-ripple
+                    dense
                     class="q-pl-lg q-my-xs rounded-borders q-mx-md"
                     :class="currentRoute === child.route ? 'text-white' : ''"
                     :to="{ path: child.route }"
@@ -35,7 +37,7 @@
             clickable
             dense
             :to="{ path: item.route }"
-            class="rounded-borders q-mx-md q-my-md q-py-xs q-px-sm"
+            class="rounded-borders q-mx-md q-my-xs q-py-xs q-px-sm"
             color="grey-3"
             :class="currentRoute === item.route ? 'bg-primary text-white ' : ''"
           >
@@ -69,18 +71,24 @@ const menus = ref<any[]>([
   },
   {
     icon: 'fitness_center',
-    label: 'Treinos',
-    route: '/workouts',
-    children: []
-  },
-  {
-    icon: 'history',
-    label: 'Históricos',
-    route: '/history',
+    label: 'Meu treino',
+    route: '/workout',
     children: []
   },
   {
     icon: 'receipt_long',
+    label: 'Fichas treinos',
+    route: '/training_worksheets',
+    children: []
+  },
+  {
+    icon: 'history',
+    label: 'Históricos de atividades',
+    route: '/history',
+    children: []
+  },
+  {
+    icon: 'monitor_heart',
     label: 'Avaliações',
     route: '/evaluations',
     children: []

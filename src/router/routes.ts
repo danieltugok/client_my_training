@@ -35,19 +35,38 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
-        path: 'workouts',
-        name: 'Workouts',
+        path: 'training_worksheets',
+        name: 'TrainingWorksheetList',
         component: () =>
-          import(/* webpackChunkName: "main" */ '@/views/workouts/WorkoutListView.vue'),
+          import(
+            /* webpackChunkName: "main" */ '@/views/training_worksheet/TrainingWorksheetListView.vue'
+          ),
         meta: {
           requiresAuth: true
         }
       },
       {
-        path: 'workouts/create',
-        name: 'WorkoutsCreate',
-        component: () =>
-          import(/* webpackChunkName: "main" */ '@/views/workouts/WorkoutCreateView.vue'),
+        path: '/workout',
+        name: 'Workout',
+        component: () => import(/* webpackChunkName: "main" */ '@/views/WorkoutView.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      // {
+      //   path: 'workouts/create',
+      //   name: 'WorkoutsCreate',
+      //   component: () =>
+      //     import(/* webpackChunkName: "main" */ '@/views/workouts/WorkoutCreateView.vue'),
+      //   meta: {
+      //     requiresAuth: true
+      //   }
+      // },
+
+      {
+        path: 'history',
+        name: 'History',
+        component: () => import(/* webpackChunkName: "main" */ '@/views/HistoryView.vue'),
         meta: {
           requiresAuth: true
         }

@@ -15,8 +15,8 @@ const menus = ref<any[]>([
   },
   {
     icon: 'sym_r_fitness_center',
-    label: 'Treinos',
-    route: '/workouts',
+    label: 'Meu treino',
+    route: '/workout',
     children: []
   },
   {
@@ -26,16 +26,10 @@ const menus = ref<any[]>([
     children: []
   },
   {
-    icon: 'sym_r_settings',
-    label: 'Configurações',
-    route: '/settings',
+    icon: 'sym_r_monitor_heart',
+    label: 'Avaliações',
+    route: '/evaluations',
     children: []
   },
-  {
-    icon: 'sym_r_live_help',
-    label: 'Sobre',
-    route: '/about',
-    children: []
-  }
 ])
 </script>
