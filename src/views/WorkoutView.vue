@@ -1,16 +1,16 @@
 <template>
   <q-page class="wrapper" padding>
-    <q-breadcrumbs>
+    <q-breadcrumbs v-if="!$q.screen.lt.sm">
       <template v-slot:separator>
         <q-icon size="1.2em" name="chevron_right" color="primary" />
       </template>
       <q-breadcrumbs-el label="Principal" to="/" />
       <q-breadcrumbs-el label="Treino" />
     </q-breadcrumbs>
-    <q-toolbar>
+    <q-toolbar v-if="!$q.screen.lt.sm">
       <q-toolbar-title>Treino</q-toolbar-title>
     </q-toolbar>
-    <q-card flat bordered>
+    <q-card flat>
       <q-tabs v-model="tab">
         <template v-for="(workout, index) in workouts" :key="index">
           <q-tab :name="workout.id" :label="workout.name" />
@@ -20,7 +20,7 @@
       <q-tab-panels v-model="tab" animated>
         <template v-for="(workout, index) in workouts" :key="index">
           <q-tab-panel :name="workout.id">
-            <div class="text-h6">{{ workout.name }}</div>
+            <div class="text-h6">Treino {{ workout.name }}</div>
             <div>
               <q-chip
                 v-for="(muscle_group, index) in workout.muscle_groups"
@@ -28,6 +28,17 @@
                 :label="muscle_group.name"
               />
             </div>
+            <q-linear-progress
+              stripe
+              rounded
+              size="20px"
+              :value="
+                workout.exercises.filter((exercise: any) => exercise.done).length /
+                workout.exercises.length
+              "
+              color="positive"
+              class="q-mt-sm"
+            />
             <q-list bordered class="rounded-borders q-my-md">
               <q-item
                 v-for="(exercise, index) in workout.exercises"

@@ -1,6 +1,6 @@
 <template>
   <q-layout view="FHr Lpr lFf">
-    <q-header :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'" bordered>
+    <q-header :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'">
       <q-toolbar>
         <q-btn
           icon="sym_r_notes"
@@ -26,7 +26,8 @@
       <mobile-menu />
     </q-footer>
 
-    <q-drawer v-else
+    <q-drawer
+      v-else
       v-model="leftDrawerOpen"
       side="left"
       show-if-above
