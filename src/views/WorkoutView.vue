@@ -87,7 +87,7 @@
       </q-toolbar>
       <img src="https://cdn.quasar.dev/img/mountains.jpg" />
       <q-card-section>
-        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-h6">{{ exerciseSelected.name }}</div>
         <div>
           Exercício para trabalhar os músculos do peito e ombros. É realizado com halteres ou cabos,
           com os braços se movendo lateralmente em forma de cruz.
