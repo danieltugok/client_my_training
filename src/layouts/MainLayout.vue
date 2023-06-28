@@ -11,7 +11,7 @@
           dense
           v-if="false"
         />
-        <q-toolbar-title> my training </q-toolbar-title>
+        <q-toolbar-title> logo </q-toolbar-title>
         <div class="q-gutter-sm">
           <q-btn
             dense
