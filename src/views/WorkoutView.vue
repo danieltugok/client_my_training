@@ -22,17 +22,22 @@
           <q-tab-panel :name="workout.id">
             <div class="text-h6">Treino {{ workout.name }}</div>
             <div>
-              <!-- <q-chip
-                dense
+              <q-chip
                 v-for="(muscle_group, index) in workout.muscle_groups"
                 :key="index"
                 clickable
+                square
+                :selected="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0"
                 @click="setMuscleGroupsSelect(muscle_group.id)"
                 :label="muscle_group.name"
                 :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'primary' : 'grey-5 '"
                 :text-color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'white' : 'dark'"
-              /> -->
-              <q-tabs
+                ><q-badge color="orange" text-color="white" floating transparent round >{{
+                  workout.exercises.filter((item: any) => item.muscle_group.id === muscle_group.id)
+                    .length
+                }}</q-badge>
+              </q-chip>
+              <!-- <q-tabs
                 indicator-color="transparent"
                 no-caps
                 outside-arrows
@@ -54,7 +59,7 @@
                     ).length
                   }}</q-badge>
                 </q-tab>
-              </q-tabs>
+              </q-tabs> -->
             </div>
             <q-linear-progress
               stripe
