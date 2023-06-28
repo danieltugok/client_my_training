@@ -60,7 +60,7 @@
               <q-item clickable v-ripple @click="openDetails(exercise)">
                 <q-item-section avatar>
                   <q-avatar rounded>
-                    <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+                    <img src="@/assets/gifs/b6.gif" />
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
@@ -90,7 +90,9 @@
         <q-toolbar-title> Detalhes </q-toolbar-title>
         <q-btn flat round dense icon="sym_r_close" v-close-popup />
       </q-toolbar>
-      <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+      <video :width="$q.screen.width" height="240" controls autoplay>
+        <source src="@/assets/videos/video.mp4" type="video/mp4" />
+      </video>
       <q-card-section>
         <div class="text-h6">{{ exerciseSelected.name }}</div>
         <div>
@@ -124,6 +126,15 @@
             </q-item-section>
             <q-item-section side>
               <q-chip :label="exerciseSelected.muscle_group.name" />
+            </q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item>
+            <q-item-section>
+              <q-item-label>Carga</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label>{{ exerciseSelected.weight }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
