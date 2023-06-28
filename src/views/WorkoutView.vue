@@ -17,12 +17,13 @@
         </template>
       </q-tabs>
       <q-separator />
-      <q-tab-panels v-model="tab" animated>
+      <q-tab-panels v-model="tab" animated class="q-px-none">
         <template v-for="(workout, index) in workouts" :key="index">
-          <q-tab-panel :name="workout.id">
+          <q-tab-panel :name="workout.id" class="q-px-sm">
             <div class="text-h6">Treino {{ workout.name }}</div>
             <div>
               <q-chip
+                dense
                 v-for="(muscle_group, index) in workout.muscle_groups"
                 :key="index"
                 clickable
@@ -50,30 +51,28 @@
               class="q-mt-sm"
             />
             <q-separator spaced />
-            <q-list class="rounded-borders q-my-md">
-              <template
-                v-for="(exercise, index) in workout.exercises.filter((item:any) =>
+            <template
+              v-for="(exercise, index) in workout.exercises.filter((item:any) =>
                   muscleGroupsSelect.includes(item.muscle_group.id)
                 )"
-                :key="index"
-              >
-                <q-item clickable v-ripple @click="openDetails(exercise)">
-                  <q-item-section avatar>
-                    <q-avatar rounded>
-                      <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-                    </q-avatar>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>{{ exercise.name }}</q-item-label>
-                    <q-item-label caption lines="2">{{ exercise.muscle_group.name }}</q-item-label>
-                  </q-item-section>
-                  <q-item-section side>
-                    <q-checkbox color="positive" v-model="exercise.done" />
-                  </q-item-section>
-                </q-item>
-                <q-separator inset />
-              </template>
-            </q-list>
+              :key="index"
+            >
+              <q-item clickable v-ripple @click="openDetails(exercise)">
+                <q-item-section avatar>
+                  <q-avatar rounded>
+                    <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ exercise.name }}</q-item-label>
+                  <q-item-label caption lines="2">{{ exercise.muscle_group.name }}</q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  <q-checkbox color="positive" v-model="exercise.done" />
+                </q-item-section>
+              </q-item>
+              <q-separator />
+            </template>
           </q-tab-panel>
         </template>
       </q-tab-panels>
