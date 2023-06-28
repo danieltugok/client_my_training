@@ -22,11 +22,26 @@
           <q-tab-panel :name="workout.id">
             <div class="text-h6">Treino {{ workout.name }}</div>
             <div>
-              <q-chip
+              <!-- <q-chip
+                dense
                 v-for="(muscle_group, index) in workout.muscle_groups"
                 :key="index"
+                clickable
+                @click="setMuscleGroupsSelect(muscle_group.id)"
                 :label="muscle_group.name"
-              />
+                :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'primary' : 'grey-5 '"
+                :text-color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'white' : 'dark'"
+              /> -->
+              <q-tabs indicator-color="transparent" no-caps>
+                <q-tab
+                  v-for="(muscle_group, index) in workout.muscle_groups"
+                  :key="index"
+                  dense
+                  @click="setMuscleGroupsSelect(muscle_group.id)"
+                  :label="muscle_group.name"
+                  :class="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'bg-primary text-white' : ''"
+                />
+              </q-tabs>
             </div>
             <q-linear-progress
               stripe
@@ -41,7 +56,9 @@
             />
             <q-list bordered class="rounded-borders q-my-md">
               <q-item
-                v-for="(exercise, index) in workout.exercises"
+                v-for="(exercise, index) in workout.exercises.filter((item:any) =>
+                  muscleGroupsSelect.includes(item.muscle_group.id)
+                )"
                 :key="index"
                 clickable
                 v-ripple
@@ -62,8 +79,14 @@
   </q-page>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 const tab = ref<string | number>(1)
+const muscleGroupsSelect = ref<any[]>([])
+const setMuscleGroupsSelect = (group_id: number) => {
+  if (muscleGroupsSelect.value.filter((item: number) => item === group_id).length > 0)
+    muscleGroupsSelect.value = muscleGroupsSelect.value.filter((item: number) => item !== group_id)
+  else muscleGroupsSelect.value.push(group_id)
+}
 const workouts = ref<any[]>([
   {
     id: 1,
@@ -103,7 +126,7 @@ const workouts = ref<any[]>([
       {
         id: 2,
         name: 'Supino Inclinado',
-        order: 1,
+        order: 2,
         repetition: 10 / 12,
         series: 4,
         weight: 'Alta',
@@ -116,8 +139,8 @@ const workouts = ref<any[]>([
       {
         id: 3,
         name: 'Supino Declinado',
-        order: 1,
-        repetition: 10 / 12,
+        order: 3,
+        repetition: '10 / 12',
         series: 4,
         weight: 'Alta',
         muscle_group: {
@@ -129,7 +152,7 @@ const workouts = ref<any[]>([
       {
         id: 8,
         name: 'Desenvolvimento Ombro',
-        order: 1,
+        order: 4,
         repetition: 10 / 12,
         series: 4,
         weight: 'Alta',
@@ -351,4 +374,17 @@ const workouts = ref<any[]>([
     ]
   }
 ])
+
+const setMuscleGroups = () => {
+  const muscleGroups = workouts.value
+    .filter((workout: any) => workout.id === tab.value)
+    .map((workout: any) => workout.muscle_groups)
+    .flat()
+
+  muscleGroupsSelect.value = muscleGroups.map((muscleGroup: any) => muscleGroup.id)
+}
+setMuscleGroups()
+watch(tab, () => {
+  setMuscleGroups()
+})
 </script>
