@@ -1,5 +1,9 @@
 <template>
-  <q-tabs align="center" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'">
+  <q-tabs
+    align="center"
+    :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'"
+    switch-indicator
+  >
     <q-route-tab v-for="menu in menus" :key="menu.id" :to="menu.route" :icon="menu.icon" />
   </q-tabs>
 </template>
@@ -30,6 +34,6 @@ const menus = ref<any[]>([
     label: 'Avaliações',
     route: '/evaluations',
     children: []
-  },
+  }
 ])
 </script>

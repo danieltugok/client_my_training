@@ -1,5 +1,5 @@
 <template>
-  <q-page class="wrapper" padding>
+  <q-page padding>
     <q-breadcrumbs v-if="!$q.screen.lt.sm">
       <template v-slot:separator>
         <q-icon size="1.2em" name="chevron_right" color="primary" />
@@ -31,9 +31,9 @@
                 square
                 @click="setMuscleGroupsSelect(muscle_group.id)"
                 :label="muscle_group.name"
-                :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'primary' : 'grey-5 '"
+                :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'dark' : 'grey-5'"
                 :text-color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'white' : 'dark'"
-                ><q-badge color="orange" text-color="white" floating transparent round>{{
+                ><q-badge color="primary" text-color="white" floating transparent round>{{
                   workout.exercises.filter((item: any) => item.muscle_group.id === muscle_group.id)
                     .length
                 }}</q-badge>
@@ -68,7 +68,7 @@
                   <q-item-label caption lines="2">{{ exercise.muscle_group.name }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <q-checkbox color="positive" v-model="exercise.done" />
+                  <q-checkbox color="positive" v-model="exercise.done" size="sm" />
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -78,7 +78,12 @@
       </q-tab-panels>
     </q-card>
   </q-page>
-  <q-dialog v-model="dialogExerciseDetails" persistent :maximized="$q.screen.lt.sm">
+  <q-dialog
+    v-model="dialogExerciseDetails"
+    persistent
+    :maximized="$q.screen.lt.sm"
+    position="bottom"
+  >
     <q-card style="min-width: 300px" flat>
       <q-toolbar>
         <q-toolbar-title> Detalhes </q-toolbar-title>
