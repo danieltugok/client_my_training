@@ -32,7 +32,14 @@
                 :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'primary' : 'grey-5 '"
                 :text-color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'white' : 'dark'"
               /> -->
-              <q-tabs indicator-color="transparent" no-caps>
+              <q-tabs
+                indicator-color="transparent"
+                no-caps
+                outside-arrows
+                mobile-arrows
+                inline-label
+                dense
+              >
                 <q-tab
                   v-for="(muscle_group, index) in workout.muscle_groups"
                   :key="index"
@@ -40,7 +47,13 @@
                   @click="setMuscleGroupsSelect(muscle_group.id)"
                   :label="muscle_group.name"
                   :class="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'bg-primary text-white' : ''"
-                />
+                >
+                  <q-badge color="primary" text-color="white" floating>{{
+                    workout.exercises.filter(
+                      (item: any) => item.muscle_group.id === muscle_group.id
+                    ).length
+                  }}</q-badge>
+                </q-tab>
               </q-tabs>
             </div>
             <q-linear-progress
