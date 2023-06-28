@@ -22,13 +22,13 @@
           <q-tab-panel :name="workout.id" class="q-px-sm">
             <div class="text-h6">Treino {{ workout.name }}</div>
             <div>
+              <!-- :selected="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0" -->
               <q-chip
                 dense
                 v-for="(muscle_group, index) in workout.muscle_groups"
                 :key="index"
                 clickable
                 square
-                :selected="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0"
                 @click="setMuscleGroupsSelect(muscle_group.id)"
                 :label="muscle_group.name"
                 :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'primary' : 'grey-5 '"
