@@ -32,7 +32,6 @@
               <q-item
                 v-for="(exercise, index) in workout.exercises"
                 :key="index"
-                tag="label"
                 clickable
                 v-ripple
               >
@@ -41,7 +40,7 @@
                   <q-item-label caption lines="2">{{ exercise.muscle_group.name }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <q-toggle color="blue" v-model="exercise.done" />
+                  <q-checkbox color="positive" v-model="exercise.done" />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -57,11 +56,15 @@ const tab = ref<string | number>(1)
 const workouts = ref<any[]>([
   {
     id: 1,
-    name: 'Treino A',
+    name: 'A',
     muscle_groups: [
       {
         id: 1,
         name: 'Peito'
+      },
+      {
+        id: 9,
+        name: 'Trapézio'
       },
       {
         id: 3,
@@ -142,7 +145,7 @@ const workouts = ref<any[]>([
   },
   {
     id: 2,
-    name: 'Treino B',
+    name: 'B',
     muscle_groups: [
       {
         id: 2,
@@ -207,6 +210,130 @@ const workouts = ref<any[]>([
         muscle_group: {
           id: 4,
           name: 'Bíceps'
+        },
+        done: false
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'C',
+    muscle_groups: [
+      {
+        id: 7,
+        name: 'Posteriores de Coxa'
+      },
+      {
+        id: 8,
+        name: 'Panturrilha'
+      },
+      {
+        id: 10,
+        name: 'Quadríceps'
+      }
+    ],
+    exercises: [
+      {
+        id: 10,
+        name: 'Agachamento Livre',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 10,
+          name: 'Quadríceps'
+        },
+        done: false
+      },
+      {
+        id: 11,
+        name: 'Leg Press 45º',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 10,
+          name: 'Quadríceps'
+        },
+        done: false
+      },
+      {
+        id: 12,
+        name: 'Cadeira Extensora',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 10,
+          name: 'Quadríceps'
+        },
+        done: false
+      },
+      {
+        id: 13,
+        name: 'Cadeira Flexora',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 7,
+          name: 'Posteriores de Coxa'
+        },
+        done: false
+      },
+      {
+        id: 14,
+        name: 'Stiff Barra Reta',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 7,
+          name: 'Posteriores de Coxa'
+        },
+        done: false
+      },
+      {
+        id: 15,
+        name: 'Panturrilha Sentado',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 8,
+          name: 'Panturrilha'
+        },
+        done: false
+      },
+      {
+        id: 16,
+        name: 'Panturrilha em Pé',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 8,
+          name: 'Panturrilha'
+        },
+        done: false
+      },
+      {
+        id: 17,
+        name: 'Panturrilha no Leg Press 45º',
+        order: 1,
+        repetition: 10 / 12,
+        series: 4,
+        weight: 'Alta',
+        muscle_group: {
+          id: 8,
+          name: 'Panturrilha'
         },
         done: false
       }
