@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page :padding="!$q.screen.lt.sm">
     <q-breadcrumbs v-if="!$q.screen.lt.sm">
       <template v-slot:separator>
         <q-icon size="1.2em" name="chevron_right" color="primary" />
