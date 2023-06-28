@@ -68,11 +68,12 @@
                   <q-item-label caption lines="2">{{ exercise.muscle_group.name }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <q-checkbox color="positive" v-model="exercise.done" size="sm" />
+                  <q-checkbox color="positive" v-model="exercise.done" size="md" />
                 </q-item-section>
               </q-item>
               <q-separator />
             </template>
+            <q-btn color="dark" label="Finalizar" class="full-width q-my-md" no-caps />
           </q-tab-panel>
         </template>
       </q-tab-panels>
