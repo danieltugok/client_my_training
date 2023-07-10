@@ -53,15 +53,15 @@ const routes: RouteRecordRaw[] = [
           requiresAuth: true
         }
       },
-      // {
-      //   path: 'workouts/create',
-      //   name: 'WorkoutsCreate',
-      //   component: () =>
-      //     import(/* webpackChunkName: "main" */ '@/views/workouts/WorkoutCreateView.vue'),
-      //   meta: {
-      //     requiresAuth: true
-      //   }
-      // },
+      {
+        path: 'workouts/create',
+        name: 'WorkoutsCreate',
+        component: () =>
+          import(/* webpackChunkName: "main" */ '@/views/training_worksheet/WorkoutCreateView.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
 
       {
         path: 'history',
