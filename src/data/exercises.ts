@@ -44,8 +44,7 @@ export default [
   {
     id: 7,
     name: 'Arnold Press',
-    description:
-      'Exercício para os ombros que envolve levantar halteres e girar os braços enquanto são levantados.',
+    description: 'Exercício para os ombros que envolve levantar halteres e girar os braços enquanto são levantados.',
     muscle_groups: 'Ombro'
   },
   {
@@ -57,8 +56,7 @@ export default [
   {
     id: 9,
     name: 'Elevação lateral',
-    description:
-      'Exercício para os ombros que envolve levantar os braços lateralmente até a altura dos ombros.',
+    description: 'Exercício para os ombros que envolve levantar os braços lateralmente até a altura dos ombros.',
     muscle_groups: 'Ombro'
   },
   {
@@ -315,8 +313,7 @@ export default [
   {
     id: 46,
     name: 'Elevação frontal',
-    description:
-      'Exercício para os ombros que envolve levantar os braços à frente até a altura dos ombros.',
+    description: 'Exercício para os ombros que envolve levantar os braços à frente até a altura dos ombros.',
     muscle_groups: 'Ombro'
   },
   {

@@ -16,7 +16,6 @@ import { AddressbarColor, Loading, QSpinnerDots, Notify, Dialog } from 'quasar'
 import 'quasar/src/css/index.sass'
 import '@/styles/quasar-custom.sass'
 
-
 export default {
   plugins: { AddressbarColor, Loading, Notify, Dialog },
   config: {

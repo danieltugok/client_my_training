@@ -2,9 +2,7 @@
   <q-page class="flex flex-center" padding>
     <q-form @submit="onSubmit">
       <q-card flat class="wrapper">
-        <q-card-section class="text-center q-pt-none">
-          <div class="text-h6">Acessar</div>
-        </q-card-section>
+        <div class="text-h6 row justify-center">Acessar</div>
         <q-card-section>
           <q-input
             v-model="email"
@@ -75,7 +73,7 @@ const email = ref<string>('')
 const password = ref<string>('')
 const showPassword = ref<boolean>(false)
 const loading = ref<boolean>(false)
-const onSubmit = () => {
+function onSubmit() {
   console.log('submit')
 }
 </script>

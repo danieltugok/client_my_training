@@ -34,8 +34,7 @@
                 :color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'dark' : 'grey-5'"
                 :text-color="muscleGroupsSelect.filter((item: number) => item === muscle_group.id).length > 0 ? 'white' : 'dark'"
                 ><q-badge color="primary" text-color="white" floating transparent round>{{
-                  workout.exercises.filter((item: any) => item.muscle_group.id === muscle_group.id)
-                    .length
+                  workout.exercises.filter((item: any) => item.muscle_group.id === muscle_group.id).length
                 }}</q-badge>
               </q-chip>
             </div>
@@ -79,12 +78,7 @@
       </q-tab-panels>
     </q-card>
   </q-page>
-  <q-dialog
-    v-model="dialogExerciseDetails"
-    persistent
-    :maximized="$q.screen.lt.sm"
-    position="bottom"
-  >
+  <q-dialog v-model="dialogExerciseDetails" persistent :maximized="$q.screen.lt.sm" position="bottom">
     <q-card style="min-width: 300px" flat>
       <q-toolbar>
         <q-toolbar-title> Detalhes </q-toolbar-title>
@@ -96,8 +90,8 @@
       <q-card-section>
         <div class="text-h6">{{ exerciseSelected.name }}</div>
         <div>
-          Exercício para trabalhar os músculos do peito e ombros. É realizado com halteres ou cabos,
-          com os braços se movendo lateralmente em forma de cruz.
+          Exercício para trabalhar os músculos do peito e ombros. É realizado com halteres ou cabos, com os braços se
+          movendo lateralmente em forma de cruz.
         </div>
       </q-card-section>
       <q-card-section>

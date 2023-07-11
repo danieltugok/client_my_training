@@ -1,9 +1,5 @@
 <template>
-  <q-tabs
-    align="center"
-    :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'"
-    switch-indicator
-  >
+  <q-tabs align="center" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white text-dark'" switch-indicator>
     <q-route-tab v-for="menu in menus" :key="menu.id" :to="menu.route" :icon="menu.icon" />
   </q-tabs>
 </template>

@@ -35,12 +35,49 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'exercises',
+        name: 'Exercises',
+        component: () => import(/* webpackChunkName: "exercise" */ '@/views/exercises/ListExercisesView.vue'),
+        meta: {
+          requiresAuth: true
+        },
+        props: true,
+        children: [
+          {
+            path: ':id/:type',
+            name: 'EditExercises',
+            component: () => import(/* webpackChunkName: "exercise" */ '@/views/exercises/ListExercisesView.vue'),
+            meta: {
+              requiresAuth: true
+            },
+            props: true
+          },
+          {
+            path: ':type',
+            name: 'CreateExercises',
+            component: () => import(/* webpackChunkName: "exercise" */ '@/views/exercises/ListExercisesView.vue'),
+            meta: {
+              requiresAuth: true
+            },
+            props: true
+          }
+        ]
+      },
+      // {
+      //   path: 'exercises/edit/:id',
+      //   name: 'Exercises',
+      //   component: () =>
+      //     import(/* webpackChunkName: "exercise" */ '@/views/exercises/ListExercisesView.vue'),
+      //   meta: {
+      //     requiresAuth: true
+      //   },
+      //   props: true
+      // },
+      {
         path: 'training_worksheets',
         name: 'TrainingWorksheetList',
         component: () =>
-          import(
-            /* webpackChunkName: "main" */ '@/views/training_worksheet/TrainingWorksheetListView.vue'
-          ),
+          import(/* webpackChunkName: "main" */ '@/views/training_worksheet/TrainingWorksheetListView.vue'),
         meta: {
           requiresAuth: true
         }
@@ -56,8 +93,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'workouts/create',
         name: 'WorkoutsCreate',
-        component: () =>
-          import(/* webpackChunkName: "main" */ '@/views/training_worksheet/WorkoutCreateView.vue'),
+        component: () => import(/* webpackChunkName: "main" */ '@/views/training_worksheet/WorkoutCreateView.vue'),
         meta: {
           requiresAuth: true
         }
@@ -104,8 +140,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'forgot-password',
         name: 'ForgotPassword',
-        component: () =>
-          import(/* webpackChunkName: "auth" */ '@/views/auth/ForgotPasswordView.vue'),
+        component: () => import(/* webpackChunkName: "auth" */ '@/views/auth/ForgotPasswordView.vue'),
         meta: {
           requiresAuth: false
         }

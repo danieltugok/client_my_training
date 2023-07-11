@@ -30,23 +30,11 @@
                     outlined
                     :rules="[(val: any) => !!val || 'O nome é obrigatorio']"
                   />
-                  <q-input
-                    v-model="formWorkout.description"
-                    type="textarea"
-                    outlined
-                    label="Desccricao"
-                  />
+                  <q-input v-model="formWorkout.description" type="textarea" outlined label="Desccricao" />
                 </q-card-section>
                 <q-separator spaced />
                 <q-card-section class="q-pt-none q-gutter-y-sm">
-                  <q-btn
-                    color="primary"
-                    label="Avancar"
-                    unelevated
-                    class="full-width"
-                    no-caps
-                    type="submit"
-                  />
+                  <q-btn color="primary" label="Avancar" unelevated class="full-width" no-caps type="submit" />
                 </q-card-section>
               </q-card>
             </q-form>
@@ -86,22 +74,8 @@
                 </q-card-section>
                 <q-separator spaced />
                 <q-card-section class="q-pt-none q-gutter-y-sm">
-                  <q-btn
-                    color="primary"
-                    label="Avancar"
-                    unelevated
-                    class="full-width"
-                    no-caps
-                    type="submit"
-                  />
-                  <q-btn
-                    color="primary"
-                    label="Voltar"
-                    outline
-                    class="full-width"
-                    no-caps
-                    @click="step--"
-                  />
+                  <q-btn color="primary" label="Avancar" unelevated class="full-width" no-caps type="submit" />
+                  <q-btn color="primary" label="Voltar" outline class="full-width" no-caps @click="step--" />
                 </q-card-section>
               </q-card>
             </q-form>
@@ -112,15 +86,7 @@
                 <q-card-section>
                   <div class="row items-center justify-between">
                     <div class="text-body1">Exercícios</div>
-                    <q-btn
-                      color="primary"
-                      icon="sym_r_add"
-                      no-caps
-                      flat
-                      round
-                      unelevated
-                      @click="onAddExercise"
-                    />
+                    <q-btn color="primary" icon="sym_r_add" no-caps flat round unelevated @click="onAddExercise" />
                   </div>
                 </q-card-section>
                 <q-card-section>
@@ -128,26 +94,12 @@
                     <q-item v-if="exercise">
                       <q-item-section>
                         <q-item-label>{{ exercise?.exercise?.name }}</q-item-label>
-                        <q-item-label caption lines="2">{{
-                          exercise?.repetitions?.max
-                        }}</q-item-label>
+                        <q-item-label caption lines="2">{{ exercise?.repetitions?.max }}</q-item-label>
                       </q-item-section>
                       <q-item-section side>
                         <div class="row q-gutter-sm">
-                          <q-btn
-                            flat
-                            color="dark"
-                            icon="sym_r_edit"
-                            round
-                            @click="onEditExercise(index)"
-                          />
-                          <q-btn
-                            flat
-                            color="negative"
-                            icon="sym_r_delete"
-                            round
-                            @click="removeExercise(index)"
-                          />
+                          <q-btn flat color="dark" icon="sym_r_edit" round @click="onEditExercise(index)" />
+                          <q-btn flat color="negative" icon="sym_r_delete" round @click="removeExercise(index)" />
                         </div>
                       </q-item-section>
                     </q-item>
@@ -155,22 +107,8 @@
                 </q-card-section>
                 <q-separator spaced />
                 <q-card-section class="q-pt-none q-gutter-y-sm">
-                  <q-btn
-                    color="primary"
-                    label="Salvar"
-                    unelevated
-                    class="full-width"
-                    no-caps
-                    type="submit"
-                  />
-                  <q-btn
-                    color="primary"
-                    label="Voltar"
-                    outline
-                    class="full-width"
-                    no-caps
-                    @click="step--"
-                  />
+                  <q-btn color="primary" label="Salvar" unelevated class="full-width" no-caps type="submit" />
+                  <q-btn color="primary" label="Voltar" outline class="full-width" no-caps @click="step--" />
                 </q-card-section>
               </q-card>
             </q-form>
@@ -201,25 +139,11 @@
         </div>
         <div class="col-12">
           <span class="text-body2">Repetições</span>
-          <q-range
-            v-model="formExercise.repetitions"
-            :min="1"
-            :max="20"
-            markers
-            label-always
-            class="q-pb-md"
-          />
+          <q-range v-model="formExercise.repetitions" :min="1" :max="20" markers label-always class="q-pb-md" />
         </div>
         <div class="col-12">
           <span class="text-body2">Series</span>
-          <q-slider
-            v-model="formExercise.series"
-            markers
-            :min="1"
-            :max="6"
-            class="q-pb-md"
-            marker-labels
-          />
+          <q-slider v-model="formExercise.series" markers :min="1" :max="6" class="q-pb-md" marker-labels />
         </div>
       </q-card-section>
       <q-card-section class="row justify-end">
@@ -254,9 +178,7 @@ const exercises = computed<any[]>(() => {
 
 const exercisesFiltered = computed(() => {
   return exercises.value
-    .filter((exercice: any) =>
-      formWorkout.muscle_groups.some((group: any) => group.name === exercice.muscle_groups)
-    )
+    .filter((exercice: any) => formWorkout.muscle_groups.some((group: any) => group.name === exercice.muscle_groups))
     .filter((exercise: any) => {
       return !formWorkout.exercises.some((item) => item.exercise.id === exercise.id)
     })
