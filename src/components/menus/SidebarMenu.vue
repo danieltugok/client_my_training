@@ -60,8 +60,8 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-const router = useRouter()
-const currentRoute = computed<string>((): string => router.currentRoute.value.path)
+const $router = useRouter()
+const currentRoute = computed<string>((): string => $router.currentRoute.value.path)
 const menus = ref<any[]>([
   {
     icon: 'dashboard',

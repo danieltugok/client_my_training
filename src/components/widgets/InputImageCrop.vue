@@ -86,7 +86,7 @@
       </q-btn>
       <q-btn
         color="red-4"
-        flat=""
+        flat
         icon="sym_r_close"
         round
         unelevated

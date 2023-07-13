@@ -69,8 +69,8 @@
                 </q-select>
               </q-card-section>
               <q-separator spaced />
-              <q-card-section class="q-gutter-y-sm">
-                <q-btn color="primary" label="Avancar" unelevated class="full-width" no-caps type="submit" />
+              <q-card-section class="q-gutter-y-sm row justify-end">
+                <q-btn color="primary" label="Avancar" unelevated no-caps type="submit" :dense="!$q.screen.lt.sm" />
               </q-card-section>
             </q-card>
           </q-form>
@@ -80,54 +80,45 @@
             <q-card flat>
               <q-separator spaced />
               <q-card-section>
-                <input-image-crop label="image" type="image" @update="updateImage" :dense="!$q.screen.lt.sm" />
+                <input-image-crop
+                  label="image"
+                  type="image"
+                  @update="onSelectImagem"
+                  :dense="!$q.screen.lt.sm"
+                  :photo="image"
+                />
               </q-card-section>
               <q-separator spaced />
-              <q-card-section class="q-gutter-y-sm">
-                <q-btn color="primary" label="Avancar" unelevated class="full-width" no-caps type="submit" />
-                <q-btn color="primary" label="Voltar" outline class="full-width" no-caps @click="step--" />
+              <q-card-section class="row justify-end q-gutter-x-sm">
+                <q-btn color="primary" label="Voltar" outline no-caps @click="step--" :dense="!$q.screen.lt.sm" />
+                <q-btn color="primary" label="Avancar" unelevated no-caps type="submit" :dense="!$q.screen.lt.sm" />
               </q-card-section>
             </q-card>
           </q-form>
         </q-step>
         <q-step :name="3" title="Video" icon="sym_r_movie" :done="step > 2">
-          <q-form @submit="step++">
+          <q-form @submit="onEditExercise">
             <q-card flat>
               <q-card-section>
-                <q-select
-                  :rules="[(val: any) => val.length > 0 || 'O grupo muscular é obrigatorio']"
-                  dropdown-icon="sym_r_expand_more"
-                  v-model="form.muscle_groups"
-                  :options="muscleGroups"
-                  label="Grupo muscular"
-                  option-label="name"
-                  option-value="id"
-                  multiple
+                <q-file
                   outlined
-                  clear-icon="sym_r_close"
-                  clearable
+                  bottom-slots
+                  v-model="video"
+                  label="Video"
+                  counter
+                  @update:model-value="onSelectVideo"
                   :dense="!$q.screen.lt.sm"
                 >
-                  <template v-slot:selected-item="scope">
-                    <q-chip
-                      removable
-                      @remove="scope.removeAtIndex(scope.index)"
-                      :tabindex="scope.tabindex"
-                      color="primary"
-                      text-color="white"
-                      icon-remove="sym_r_close"
-                      dense
-                      square
-                    >
-                      {{ scope.opt.name }}
-                    </q-chip>
+                  <template v-slot:prepend>
+                    <q-icon name="attach_file" />
                   </template>
-                </q-select>
+                </q-file>
+                <video controls autoplay ref="refVideoExercice" :src="form.video_url"></video>
               </q-card-section>
               <q-separator spaced />
-              <q-card-section class="q-pt-none q-gutter-y-sm">
-                <q-btn color="primary" label="Avancar" unelevated class="full-width" no-caps type="submit" />
-                <q-btn color="primary" label="Voltar" outline class="full-width" no-caps @click="step--" />
+              <q-card-section class="q-pt-none row justify-end q-gutter-x-sm">
+                <q-btn color="primary" label="Voltar" outline no-caps @click="step--" :dense="!$q.screen.lt.sm" />
+                <q-btn color="primary" label="Salvar" unelevated no-caps type="submit" :dense="!$q.screen.lt.sm" />
               </q-card-section>
             </q-card>
           </q-form>
@@ -140,10 +131,13 @@
 import { reactive, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useExerciseComposable } from '@/composables/exerciseComposable'
-const { exerciseSelect, getExerciseById } = useExerciseComposable()
+import { editExerciseService, uploadFileExerciseService } from '@/services/exerciseServices'
 import InputImageCrop from '@/components/widgets/InputImageCrop.vue'
+import router from '@/router'
+const { exerciseSelect, getExerciseById, getExercises } = useExerciseComposable()
 const $q = useQuasar()
 const step = ref<number>(1)
+const refVideoExercice = ref<any>(null)
 const props = defineProps({
   id: {
     type: Number,
@@ -151,13 +145,14 @@ const props = defineProps({
   }
 })
 const form = reactive({
-  name: '',
-  description: '',
-  muscle_groups: [],
-  image_url: '',
-  video_url: ''
+  name: '' as string,
+  description: '' as string,
+  muscle_groups: [] as object[],
+  image_url: '' as string,
+  video_url: '' as string
 })
 const image = ref<any>(null)
+const video = ref<any>(null)
 const muscleGroups = [
   { id: 1, name: 'Peito' },
   { id: 2, name: 'Costas' },
@@ -167,8 +162,15 @@ const muscleGroups = [
   { id: 6, name: 'Perna' },
   { id: 7, name: 'Abdomen' }
 ]
-function updateImage(blob: any): void {
+function onSelectImagem(blob: any): void {
   image.value = blob
+}
+function onSelectVideo(blob: any): void {
+  const reader = new FileReader()
+  reader.readAsDataURL(blob)
+  reader.onloadend = (e: any) => {
+    refVideoExercice.value.src = e.target.result
+  }
 }
 function onSubmit() {
   $q.notify({
@@ -182,6 +184,57 @@ async function initEditExercise(): Promise<void> {
   form.name = exerciseSelect.value.name
   form.description = exerciseSelect.value.description
   form.muscle_groups = exerciseSelect.value.muscle_groups
+  form.video_url = exerciseSelect.value.video_url
+  form.image_url = exerciseSelect.value.image_url
+  video.value = exerciseSelect.value.video_url
+  image.value = exerciseSelect.value.image_url
+}
+async function uploadFileExercise(file: any): Promise<any> {
+  try {
+    const { data, status } = await uploadFileExerciseService(file)
+    if (status === 201) return data
+  } catch (error) {
+    $q.notify({
+      color: 'negative',
+      message: 'Erro ao fazer upload do arquivo',
+      icon: 'close'
+    })
+    return null
+  }
+}
+async function onEditExercise(): Promise<void> {
+  try {
+    $q.loading.show()
+    if (image.value !== form.image_url) form.image_url = await uploadFileExercise(image.value)
+    if (video.value !== form.video_url) form.video_url = await uploadFileExercise(video.value)
+    form.muscle_groups = form.muscle_groups.map((muscle: any) => muscle.id)
+    const { status } = await editExerciseService(props.id, form)
+    if (status === 200 || status === 201) {
+      getExercises()
+      $q.notify({
+        color: 'positive',
+        message: 'Exercise updated successfully',
+        icon: 'check'
+      })
+      router.push('/exercises')
+    }
+  } catch (error) {
+    $q.notify({
+      color: 'negative',
+      message: 'Erro ao editar exercicio',
+      icon: 'close'
+    })
+  } finally {
+    $q.loading.hide()
+  }
 }
 initEditExercise()
 </script>
+<style lang="sass" scoped>
+video
+  width: 100%
+  height: auto
+  max-height: 300px
+  object-fit: contain
+</style>
+```

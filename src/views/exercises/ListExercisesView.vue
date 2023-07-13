@@ -11,6 +11,7 @@
     <q-table
       :rows="exercises"
       flat
+      row-key="name"
       bordered
       :grid="gridMode"
       :columns="columnsExercise"
@@ -29,6 +30,13 @@
             </q-card-section>
           </q-card>
         </div>
+      </template>
+      <template #body-cell-image_url="props">
+        <q-td :props="props">
+          <q-avatar rounded>
+            <q-img :src="props.value" spinner-color="white" spinner-size="52px" />
+          </q-avatar>
+        </q-td>
       </template>
       <template #body-cell-muscle_groups="props">
         <q-td :props="props" class="q-gutter-xs">
@@ -96,53 +104,53 @@ const gridMode = ref<boolean>(false)
 const pagination = ref<any>({
   sortBy: 'desc',
   descending: false,
-  page: 2,
+  page: 1,
   rowsPerPage: 12
 })
-const muscleGroups = ref<any>([
-  {
-    id: 1,
-    name: 'Peitoral'
-  },
-  {
-    id: 2,
-    name: 'Bíceps'
-  },
-  {
-    id: 3,
-    name: 'Tríceps'
-  },
-  {
-    id: 4,
-    name: 'Ombros'
-  },
-  {
-    id: 5,
-    name: 'Costas',
-    slug: 'costas'
-  },
-  {
-    id: 6,
-    name: 'Quadríceps'
-  },
-  {
-    id: 7,
-    name: 'Isquiotibiais / Posterior de coxa'
-  },
-  {
-    id: 8,
-    name: 'Panturrilha'
-  },
-  {
-    id: 9,
-    name: 'Abdômen'
-  },
-  {
-    id: 10,
-    name: 'Glúteos'
-  }
-])
-const muscleGroup = ref<string>('all')
+// const muscleGroups = ref<any>([
+//   {
+//     id: 1,
+//     name: 'Peitoral'
+//   },
+//   {
+//     id: 2,
+//     name: 'Bíceps'
+//   },
+//   {
+//     id: 3,
+//     name: 'Tríceps'
+//   },
+//   {
+//     id: 4,
+//     name: 'Ombros'
+//   },
+//   {
+//     id: 5,
+//     name: 'Costas',
+//     slug: 'costas'
+//   },
+//   {
+//     id: 6,
+//     name: 'Quadríceps'
+//   },
+//   {
+//     id: 7,
+//     name: 'Isquiotibiais / Posterior de coxa'
+//   },
+//   {
+//     id: 8,
+//     name: 'Panturrilha'
+//   },
+//   {
+//     id: 9,
+//     name: 'Abdômen'
+//   },
+//   {
+//     id: 10,
+//     name: 'Glúteos'
+//   }
+// ])
+// const muscleGroup = ref<string>('all')
 function dialogOpen(): void {
   if (props.type === 'create' && !props.id) dialogCreate.value = true
   else if (props.type === 'edit' && props.id) dialogEdit.value = true
@@ -168,6 +176,6 @@ const pagesNumber = computed(() => Math.ceil(exercises.value.length / pagination
 //   else return { muscleGroups: muscleGroup.value }
 // })
 dialogOpen()
-getExercises({})
+getExercises()
 </script>
 <style lang="sass"></style>
