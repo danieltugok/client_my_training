@@ -10,7 +10,7 @@
         ref="stepper"
         color="primary"
         animated
-        alternative-labelss
+        alternative-labels
         :contracted="$q.screen.lt.sm"
         flat
         :dense="$q.screen.lt.sm"
@@ -80,35 +80,7 @@
             <q-card flat>
               <q-separator spaced />
               <q-card-section>
-                <q-select
-                  :rules="[(val: any) => val.length > 0 || 'O grupo muscular é obrigatorio']"
-                  dropdown-icon="sym_r_expand_more"
-                  v-model="form.muscle_groups"
-                  :options="muscleGroups"
-                  label="Grupo muscular"
-                  option-label="name"
-                  option-value="id"
-                  multiple
-                  outlined
-                  clear-icon="sym_r_close"
-                  clearable
-                  :dense="!$q.screen.lt.sm"
-                >
-                  <template v-slot:selected-item="scope">
-                    <q-chip
-                      removable
-                      @remove="scope.removeAtIndex(scope.index)"
-                      :tabindex="scope.tabindex"
-                      color="primary"
-                      text-color="white"
-                      icon-remove="sym_r_close"
-                      dense
-                      square
-                    >
-                      {{ scope.opt.name }}
-                    </q-chip>
-                  </template>
-                </q-select>
+                <input-image-crop label="image" type="image" @update="updateImage" :dense="!$q.screen.lt.sm" />
               </q-card-section>
               <q-separator spaced />
               <q-card-section class="q-gutter-y-sm">
@@ -169,6 +141,7 @@ import { reactive, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useExerciseComposable } from '@/composables/exerciseComposable'
 const { exerciseSelect, getExerciseById } = useExerciseComposable()
+import InputImageCrop from '@/components/widgets/InputImageCrop.vue'
 const $q = useQuasar()
 const step = ref<number>(1)
 const props = defineProps({
@@ -184,6 +157,7 @@ const form = reactive({
   image_url: '',
   video_url: ''
 })
+const image = ref<any>(null)
 const muscleGroups = [
   { id: 1, name: 'Peito' },
   { id: 2, name: 'Costas' },
@@ -193,6 +167,9 @@ const muscleGroups = [
   { id: 6, name: 'Perna' },
   { id: 7, name: 'Abdomen' }
 ]
+function updateImage(blob: any): void {
+  image.value = blob
+}
 function onSubmit() {
   $q.notify({
     color: 'positive',
@@ -200,7 +177,7 @@ function onSubmit() {
     icon: 'check'
   })
 }
-const initEditExercise = async () => {
+async function initEditExercise(): Promise<void> {
   await getExerciseById(props.id)
   form.name = exerciseSelect.value.name
   form.description = exerciseSelect.value.description

@@ -3,6 +3,7 @@ import http from '@/plugins/http'
 import { objectToQueryString } from '@/utils/request'
 
 export const getExercisesService = async (query: any): Promise<any> => {
+  console.log(query)
   return await http.get<AxiosInstance>(`exercises${objectToQueryString(query)}`)
 }
 

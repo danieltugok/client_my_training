@@ -12,7 +12,7 @@
             :header-class="'rounded-borders q-py-sm q-mx-sm  q-px-sm q-my-xs '+ 
               (item.children.find((item: any) => item.route === currentRoute)
                 ? 'bg-primary text-white'
-                : '')"
+                : 'text-primary')"
           >
             <q-card class="bg-transparent q-mx-md" flat>
               <q-card-section class="q-pa-xs">
@@ -22,7 +22,7 @@
                     v-ripple
                     dense
                     class="q-pl-lg q-my-xs rounded-borders q-mx-md"
-                    :class="currentRoute === child.route ? 'text-white' : ''"
+                    :class="currentRoute === child.route ? 'text-primary' : ''"
                     :to="{ path: child.route }"
                   >
                     <q-item-section>{{ child.label }}</q-item-section>
@@ -92,6 +92,23 @@ const menus = ref<any[]>([
     label: 'Avaliações',
     route: '/evaluations',
     children: []
+  },
+  {
+    icon: 'widgets',
+    label: 'Gerenciar',
+    route: '/evaluations',
+    children: [
+      {
+        label: 'Exercicios',
+        route: '/exercises',
+        children: []
+      },
+      {
+        label: 'Grupo muscular',
+        route: '/muscle_groups',
+        children: []
+      }
+    ]
   },
   {
     icon: 'live_help',

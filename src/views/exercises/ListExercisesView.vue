@@ -4,6 +4,10 @@
       <q-toolbar-title>Exercicios</q-toolbar-title>
       <q-btn flat dense icon="sym_r_add" label="Adicionar" no-caps to="/exercises/create" />
     </q-toolbar>
+    <!-- <q-tabs no-caps align="justify" v-model="muscleGroup">
+      <q-tab label="Todos" name="all" />
+      <q-tab v-for="group in muscleGroups" :key="group.id" :label="group.name" :name="group.name" />
+    </q-tabs> -->
     <q-table
       :rows="exercises"
       flat
@@ -13,7 +17,6 @@
       :loading="loadingExercise"
       v-model:pagination="pagination"
     >
-      <!-- :card-container-class="cardContainerClass" -->
       <template v-slot:item="props">
         <div class="q-pa-sm col-xs-12 col-sm-6 col-md-4">
           <q-card flat bordered>
@@ -96,6 +99,50 @@ const pagination = ref<any>({
   page: 2,
   rowsPerPage: 12
 })
+const muscleGroups = ref<any>([
+  {
+    id: 1,
+    name: 'Peitoral'
+  },
+  {
+    id: 2,
+    name: 'Bíceps'
+  },
+  {
+    id: 3,
+    name: 'Tríceps'
+  },
+  {
+    id: 4,
+    name: 'Ombros'
+  },
+  {
+    id: 5,
+    name: 'Costas',
+    slug: 'costas'
+  },
+  {
+    id: 6,
+    name: 'Quadríceps'
+  },
+  {
+    id: 7,
+    name: 'Isquiotibiais / Posterior de coxa'
+  },
+  {
+    id: 8,
+    name: 'Panturrilha'
+  },
+  {
+    id: 9,
+    name: 'Abdômen'
+  },
+  {
+    id: 10,
+    name: 'Glúteos'
+  }
+])
+const muscleGroup = ref<string>('all')
 function dialogOpen(): void {
   if (props.type === 'create' && !props.id) dialogCreate.value = true
   else if (props.type === 'edit' && props.id) dialogEdit.value = true
@@ -112,7 +159,14 @@ watch(
     dialogOpen()
   }
 )
+// watch(muscleGroup, () => {
+//   getExercises(query)
+// })
 const pagesNumber = computed(() => Math.ceil(exercises.value.length / pagination.value.rowsPerPage))
+// const query = computed(() => {
+//   if (muscleGroup.value === 'all') return {}
+//   else return { muscleGroups: muscleGroup.value }
+// })
 dialogOpen()
 getExercises({})
 </script>

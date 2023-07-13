@@ -23,9 +23,8 @@ export const useExerciseComposable = () => {
     },
     {
       name: 'actions',
-      label: 'Actions',
-      field: (row: any) => row.id,
-      sortable: false
+      label: 'Ações',
+      field: (row: any) => row.id
     }
   ])
   async function getExercises(query: any) {
