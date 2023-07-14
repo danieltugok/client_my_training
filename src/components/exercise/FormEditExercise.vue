@@ -11,6 +11,7 @@
         color="primary"
         animated
         alternative-labels
+        header-nav
         :contracted="$q.screen.lt.sm"
         flat
         :dense="$q.screen.lt.sm"
@@ -26,7 +27,6 @@
                   type="text"
                   label="Nome"
                   outlined
-                  :dense="!$q.screen.lt.sm"
                   :rules="[(val: any) => !!val || 'O nome é obrigatorio']"
                 />
                 <q-input
@@ -49,7 +49,6 @@
                   outlined
                   clear-icon="sym_r_close"
                   clearable
-                  :dense="!$q.screen.lt.sm"
                 >
                   <template v-slot:selected-item="scope">
                     <q-chip
@@ -102,18 +101,17 @@
               <q-card-section>
                 <q-file
                   outlined
-                  bottom-slots
                   v-model="video"
                   label="Video"
                   counter
                   @update:model-value="onSelectVideo"
-                  :dense="!$q.screen.lt.sm"
+                  accept=".mp4, .avi, .mov, .wmv, .flv, .mkv, .webm"
                 >
                   <template v-slot:prepend>
-                    <q-icon name="attach_file" />
+                    <q-icon name="sym_r_movie" />
                   </template>
                 </q-file>
-                <video controls autoplay ref="refVideoExercice" :src="form.video_url"></video>
+                <video controls autoplay ref="refVideoExercice" :src="form.video_url" loop></video>
               </q-card-section>
               <q-separator spaced />
               <q-card-section class="q-pt-none row justify-end q-gutter-x-sm">
@@ -128,7 +126,7 @@
   </q-card>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useExerciseComposable } from '@/composables/exerciseComposable'
 import { editExerciseService, uploadFileExerciseService } from '@/services/exerciseServices'
@@ -172,12 +170,25 @@ function onSelectVideo(blob: any): void {
     refVideoExercice.value.src = e.target.result
   }
 }
+function clearForm(): void {
+  form.name = ''
+  form.description = ''
+  form.muscle_groups = []
+  form.image_url = ''
+  form.video_url = ''
+  image.value = null
+  video.value = null
+}
 function onSubmit() {
   $q.notify({
     color: 'positive',
     message: 'Exercise updated successfully',
     icon: 'check'
   })
+}
+function getNameImage(url: string): string {
+  const name = url.split('/')
+  return name[name.length - 1]
 }
 async function initEditExercise(): Promise<void> {
   await getExerciseById(props.id)
@@ -186,8 +197,8 @@ async function initEditExercise(): Promise<void> {
   form.muscle_groups = exerciseSelect.value.muscle_groups
   form.video_url = exerciseSelect.value.video_url
   form.image_url = exerciseSelect.value.image_url
-  video.value = exerciseSelect.value.video_url
   image.value = exerciseSelect.value.image_url
+  video.value = new File([''], getNameImage(exerciseSelect.value.video_url))
 }
 async function uploadFileExercise(file: any): Promise<any> {
   try {
@@ -229,12 +240,15 @@ async function onEditExercise(): Promise<void> {
   }
 }
 initEditExercise()
+onUnmounted(() => {
+  clearForm()
+})
 </script>
 <style lang="sass" scoped>
 video
   width: 100%
   height: auto
-  max-height: 300px
+  max-height: 200px
   object-fit: contain
 </style>
 ```
